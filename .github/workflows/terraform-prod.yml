@@ -1,0 +1,48 @@
+# GitHub Actions Workflow for Kapuletu Production Infrastructure
+# Orchestrates high-stakes deployments to the live environment.
+# Triggers only on merges to the 'main' branch.
+
+name: Terraform Prod
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    name: Production Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/kapuletu-prod-github-actions-role
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: environments/prod
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: environments/prod
+
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: environments/prod
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve
+        working-directory: environments/prod

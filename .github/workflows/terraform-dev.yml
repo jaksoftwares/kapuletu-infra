@@ -1,0 +1,49 @@
+# GitHub Actions Workflow for Kapuletu Dev Infrastructure
+# This workflow automates the validation and deployment of infra changes to the Dev environment.
+
+name: Terraform Dev
+
+on:
+  push:
+    branches:
+      - develop # Trigger only on pushes to the develop branch
+
+permissions:
+  id-token: write # Required for requesting the JWT for OIDC
+  contents: read  # Required for actions/checkout
+
+jobs:
+  terraform:
+    name: Infrastructure Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Use OIDC to authenticate with AWS (no static keys required)
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/kapuletu-dev-github-actions-role # Replace with actual Role ARN
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: environments/dev
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: environments/dev
+
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: environments/dev
+
+      # Only apply if it's a push to the develop branch (not a PR check)
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+        run: terraform apply -auto-approve
+        working-directory: environments/dev
