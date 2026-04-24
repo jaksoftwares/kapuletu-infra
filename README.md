@@ -2,7 +2,7 @@
 
 Welcome to the **Kapuletu Enterprise Infrastructure** repository. This codebase is designed by Senior DevOps Engineers to provide a production-grade, highly available, and secure AWS environment for a serverless fintech application.
 
-## 🌟 Key Features
+##  Key Features
 
 *   **Multi-Environment Isolation**: Separate AWS accounts for `dev`, `staging`, and `prod`.
 *   **Modular Architecture**: Reusable, parameterized Terraform modules for networking, databases, IAM, and more.
@@ -13,7 +13,7 @@ Welcome to the **Kapuletu Enterprise Infrastructure** repository. This codebase 
 
 ---
 
-## 🏗 Repository Structure
+##  Repository Structure
 
 ```text
 kapuletu-infra/
@@ -39,7 +39,7 @@ kapuletu-infra/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### 1. Prerequisites
 *   Terraform `>= 1.0.0`
@@ -79,7 +79,7 @@ This repository is configured to deploy automatically via GitHub Actions:
 
 ---
 
-## 🔐 Security & Compliance
+##  Security & Compliance
 *   **OIDC Authentication**: We do not store `AWS_ACCESS_KEY_ID`. GitHub Actions authenticates via AWS IAM Identity Providers.
 *   **Secret Management**: DB passwords and API keys are stored in AWS Secrets Manager, never in plain text.
 *   **Encryption**: All S3 buckets and RDS instances have encryption at rest enabled.
@@ -87,7 +87,7 @@ This repository is configured to deploy automatically via GitHub Actions:
 
 ---
 
-## 📈 Monitoring & Observability
+##  Monitoring & Observability
 Every environment is pre-configured with:
 *   **CloudWatch Log Groups**: For centralized logging of Lambda and API Gateway.
 *   **Automated Alarms**:
