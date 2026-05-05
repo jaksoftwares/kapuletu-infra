@@ -12,6 +12,36 @@ resource "aws_cognito_user_pool" "main" {
     require_symbols   = true
     require_uppercase = true
   }
+
+  auto_verified_attributes = ["email", "phone_number"]
+
+  schema {
+    name                     = "email"
+    attribute_data_type      = "String"
+    mutable                  = true
+    required                 = true
+  }
+
+  schema {
+    name                     = "given_name"
+    attribute_data_type      = "String"
+    mutable                  = true
+    required                 = true
+  }
+
+  schema {
+    name                     = "family_name"
+    attribute_data_type      = "String"
+    mutable                  = true
+    required                 = true
+  }
+
+  schema {
+    name                     = "phone_number"
+    attribute_data_type      = "String"
+    mutable                  = true
+    required                 = true
+  }
 }
 
 resource "aws_cognito_user_pool_client" "client" {

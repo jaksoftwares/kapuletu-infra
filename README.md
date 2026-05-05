@@ -2,6 +2,8 @@
 
 Welcome to the **Kapuletu Enterprise Infrastructure** repository. This codebase is designed by Senior DevOps Engineers to provide a production-grade, highly available, and secure AWS environment for a serverless fintech application.
 
+> **New to the project?** Start by reading the [Project Overview](docs/project_overview.md) for a high-level explanation of what this codebase does.
+
 ##  Key Features
 
 *   **Multi-Environment Isolation**: Separate AWS accounts for `dev`, `staging`, and `prod`.
@@ -40,6 +42,8 @@ kapuletu-infra/
 ---
 
 ##  Getting Started
+
+For a comprehensive guide on setting up AWS credentials, variables, and initial manual steps, please refer to our [AWS Infrastructure Setup Guide](docs/aws_setup_guide.md).
 
 ### 1. Prerequisites
 *   Terraform `>= 1.0.0`
